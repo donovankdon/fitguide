@@ -73,7 +73,7 @@ function expand(m: ModelSeed): Garment {
   };
 }
 
-const LABELS = [30, 32, 33, 34, 36];
+const LABELS = [30, 32, 33, 34, 36, 38, 40];
 
 const SEED: ModelSeed[] = [
   {

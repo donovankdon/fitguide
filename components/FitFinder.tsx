@@ -9,8 +9,9 @@ import { ResultRow } from "@/components/ResultRow";
 
 const FEELS: FitFeel[] = ["slim", "regular", "relaxed"];
 
-// Sensible athletic default so the tool shows real output on first paint.
-const DEFAULT_BODY: BodyProfile = { waist: 33, thigh: 24.5, hip: 41, inseam: 32 };
+// Default = Don's size (wears 38×32). Waist/inseam are real; thigh + seat are
+// estimated for a 38-waist athletic build until measured.
+const DEFAULT_BODY: BodyProfile = { waist: 38, thigh: 27, hip: 44.5, inseam: 32 };
 
 type BodyKey = keyof BodyProfile;
 const FIELDS: { key: BodyKey; label: string; hint: string }[] = [
