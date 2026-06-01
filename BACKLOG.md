@@ -19,7 +19,8 @@ Seeded 2026-05-31 from the founder-survival audit. The autonomous builder (`~/cl
 
 ## [don] — human-only (agent will remind you, won't do these)
 
-- [ ] **D1 · Pick the name.** Audit recommends renaming off "FitGuide" (generic, SEO-dead, .com squatted) → suggested **ThighTrue** ("the fit starts at the thigh"). Your call. Once you pick, add a `[agent]` task to apply the rename in code/metadata.
+- [x] **D1 · Name chosen: Ease.** Rebrand applied across UI / metadata / package — live. (All bare `Ease` .coms are parked; domain still TBD — take a variant or buy a parked one.)
+- [x] **(bonus) Outfit side shipped** — `/outfits`: Don's 2026 style profile + 8 signature looks + color-coordination engine over a 39-piece researched catalog (incl. pleated trousers). Not on the audit's critical path; built per Don's request as the personal-use + portfolio half.
 - [ ] **D2 · Tape-measure weekend.** Buy/borrow the top ~20-25 athletic-considered pants; measure thigh 1" below crotch seam ×2, per offered size; drop real numbers into `data/catalog.ts` (A5 restructures it to receive them). This is the moat.
 - [ ] **D3 · Join affiliate networks.** Rakuten (Levi's), Awin (State & Liberty), Barbell in-house 20%, FlexOffers/Sovrn. Paste IDs into env (A7 leaves the slots).
 - [ ] **D4 · Supabase project.** Create it; paste keys into env (A8 wires the client).
