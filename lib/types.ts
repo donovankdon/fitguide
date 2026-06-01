@@ -51,6 +51,8 @@ export interface SizeFit {
   size: SizeSpec;
   score: number; // 0..100
   dims: DimScore[];
+  /** True when body thigh was missing — score is renormalized and capped; don't treat it as precise. */
+  roughCut?: boolean;
 }
 
 export interface FitResult {
@@ -59,4 +61,6 @@ export interface FitResult {
   score: number; // == bestSize.score
   verdict: string; // headline ("Dialed in", "Wearable but tight"...)
   note: string; // the specific compromise, if any
+  /** Propagated from bestSize.roughCut — show "rough cut" state, not point-precise score. */
+  roughCut?: boolean;
 }

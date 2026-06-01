@@ -40,8 +40,15 @@ export function FitFinder() {
 
   function setField(key: BodyKey, v: string) {
     const n = parseFloat(v);
-    setBody((b) => ({ ...b, [key]: Number.isFinite(n) ? n : 0 }));
+    const valid = Number.isFinite(n) && n > 0;
+    setBody((b) => ({
+      ...b,
+      // waist is required — fall back to 0 so the form stays usable
+      [key]: valid ? n : key === "waist" ? 0 : undefined,
+    }));
   }
+
+  const thighMissing = !body.thigh || body.thigh <= 0;
 
   return (
     <section className="mt-20">
@@ -69,6 +76,24 @@ export function FitFinder() {
           ))}
         </div>
       </div>
+
+      {/* thigh measurement helper — only when thigh is missing */}
+      {thighMissing && (
+        <div className="rise mt-5 flex items-start gap-3 rounded-lg border border-warn/30 bg-warn/5 px-5 py-4" style={{ animationDelay: "160ms" }}>
+          <span className="mt-px text-warn" aria-hidden>⚠</span>
+          <div className="min-w-0">
+            <p className="text-sm text-warn">
+              Add your thigh for a real verdict.{" "}
+              <span className="text-muted">
+                Wrap a tape measure around the largest part of one thigh (usually mid-thigh, standing relaxed). Enter the number above.
+              </span>
+            </p>
+            <p className="mono mt-1 text-xs text-faint">
+              Without it, results are rough cuts — scores are capped and may not reflect actual fit.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* 02 — fit feel + calibration */}
       <div className="rise mt-12" style={{ animationDelay: "200ms" }}>

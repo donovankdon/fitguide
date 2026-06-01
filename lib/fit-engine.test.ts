@@ -66,6 +66,33 @@ describe("reference-garment calibration", () => {
   });
 });
 
+describe("rough cut — missing or zero thigh", () => {
+  const NO_THIGH: BodyProfile = { waist: 33, hip: 41, inseam: 32 }; // thigh omitted
+  const ZERO_THIGH: BodyProfile = { waist: 33, thigh: 0, hip: 41, inseam: 32 };
+
+  it("marks roughCut=true when thigh is undefined", () => {
+    const r = scoreGarment(NO_THIGH, getGarment("levis-541")!);
+    expect(r.roughCut).toBe(true);
+  });
+
+  it("marks roughCut=true when thigh is 0", () => {
+    const r = scoreGarment(ZERO_THIGH, getGarment("levis-541")!);
+    expect(r.roughCut).toBe(true);
+  });
+
+  it("caps score at 72 — never 'Great fit' or 'Dialed in' without thigh data", () => {
+    for (const body of [NO_THIGH, ZERO_THIGH]) {
+      const ranked = rankFits(body, CATALOG);
+      expect(ranked.every((r) => r.score <= 72)).toBe(true);
+    }
+  });
+
+  it("does NOT set roughCut when thigh is present", () => {
+    const r = scoreGarment(ATHLETIC, getGarment("levis-541")!);
+    expect(r.roughCut).toBeFalsy();
+  });
+});
+
 describe("formatEase", () => {
   it("formats room, tightness, and exact", () => {
     expect(formatEase(1)).toBe('+1.0″');

@@ -10,7 +10,7 @@ function tone(score: number): string {
 const ORDER: Dimension[] = ["waist", "thigh", "hip", "inseam"];
 
 export function ResultRow({ rank, result }: { rank: number; result: FitResult }) {
-  const { garment: g, bestSize, score, verdict, note } = result;
+  const { garment: g, bestSize, score, verdict, note, roughCut } = result;
   const dimByName = new Map(bestSize.dims.map((d) => [d.dim, d] as const));
 
   return (
@@ -30,24 +30,41 @@ export function ResultRow({ rank, result }: { rank: number; result: FitResult })
         </p>
         <p className="mt-3 text-sm text-muted">{note}</p>
 
-        {/* the honest part: real ease at the recommended size */}
-        <div className="mono mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm">
-          {ORDER.map((dim) => {
-            const d = dimByName.get(dim);
-            if (!d) return null;
-            const tight = d.ease < d.idealEase - 0.4;
-            return (
-              <span key={dim} className={tight ? "text-bad" : "text-muted"}>
-                <span className="text-faint">{dim}</span> {formatEase(d.ease)}
-              </span>
-            );
-          })}
-        </div>
+        {/* ease deltas: only shown when thigh is present (rough cut = not reliable) */}
+        {!roughCut && (
+          <div className="mono mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm">
+            {ORDER.map((dim) => {
+              const d = dimByName.get(dim);
+              if (!d) return null;
+              const tight = d.ease < d.idealEase - 0.4;
+              return (
+                <span key={dim} className={tight ? "text-bad" : "text-muted"}>
+                  <span className="text-faint">{dim}</span> {formatEase(d.ease)}
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {roughCut && (
+          <p className="mono mt-3 text-xs text-faint">
+            thigh unknown — add your measurement for precise ease
+          </p>
+        )}
       </div>
 
       <div className="col-start-2 mt-4 flex items-baseline gap-4 sm:col-start-3 sm:mt-0 sm:flex-col sm:items-end sm:gap-1 sm:text-right">
-        <span className={`mono text-3xl ${tone(score)}`}>{score}</span>
-        <span className={`text-sm ${tone(score)}`}>{verdict}</span>
+        {roughCut ? (
+          <>
+            <span className="mono text-3xl text-faint">~{score}</span>
+            <span className="text-sm text-faint">Rough cut</span>
+          </>
+        ) : (
+          <>
+            <span className={`mono text-3xl ${tone(score)}`}>{score}</span>
+            <span className={`text-sm ${tone(score)}`}>{verdict}</span>
+          </>
+        )}
         <span className="mono mt-1 text-sm text-muted">
           {bestSize.size.label}
           {g.price ? ` · $${g.price}` : ""}

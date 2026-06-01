@@ -101,8 +101,15 @@ export function scoreSize(
     wsum += WEIGHT[d.dim];
     acc += WEIGHT[d.dim] * d.score;
   }
-  const score = wsum > 0 ? Math.round(acc / wsum) : 0;
-  return { size, score, dims };
+  const rawScore = wsum > 0 ? Math.round(acc / wsum) : 0;
+
+  // Without a thigh measurement we're renormalizing over waist/hip/inseam only.
+  // That inflates scores (dividing by 0.7 instead of 1.0). Cap at 72 so we never
+  // emit "Great fit" or "Dialed in" when the most athletic-critical dimension is unknown.
+  const roughCut = !body.thigh || body.thigh <= 0;
+  const score = roughCut ? Math.min(rawScore, 72) : rawScore;
+
+  return { size, score, dims, roughCut };
 }
 
 export function scoreGarment(
@@ -124,6 +131,7 @@ export function scoreGarment(
     score: bestSize.score,
     verdict: verdictFor(bestSize.score),
     note: noteFor(bestSize),
+    roughCut: bestSize.roughCut,
   };
 }
 
