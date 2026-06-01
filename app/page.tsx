@@ -1,8 +1,10 @@
 import { FitFinder } from "@/components/FitFinder";
+import { Nav } from "@/components/Nav";
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-5xl px-6 pb-32 pt-20 md:px-10 md:pt-28">
+    <main className="mx-auto max-w-5xl px-6 pb-32 pt-10 md:px-10 md:pt-14">
+      <Nav current="fit" />
       <header className="rise max-w-3xl">
         <p className="mono text-xs uppercase tracking-[0.25em] text-faint">
           Ease — fit is math

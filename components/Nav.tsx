@@ -1,0 +1,24 @@
+import Link from "next/link";
+
+export function Nav({ current }: { current: "fit" | "outfits" }) {
+  const cls = (key: "fit" | "outfits") =>
+    `mono text-xs uppercase tracking-[0.2em] transition-colors ${
+      current === key
+        ? "text-fg underline underline-offset-8"
+        : "text-faint hover:text-muted"
+    }`;
+  return (
+    <nav className="mb-12 flex items-center gap-5">
+      <Link href="/" className="display text-lg text-fg">
+        Ease
+      </Link>
+      <span className="text-faint">/</span>
+      <Link href="/" className={cls("fit")}>
+        Find pants
+      </Link>
+      <Link href="/outfits" className={cls("outfits")}>
+        Outfits
+      </Link>
+    </nav>
+  );
+}
