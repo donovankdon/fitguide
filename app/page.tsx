@@ -5,7 +5,7 @@ export default function Home() {
     <main className="mx-auto max-w-5xl px-6 pb-32 pt-20 md:px-10 md:pt-28">
       <header className="rise max-w-3xl">
         <p className="mono text-xs uppercase tracking-[0.25em] text-faint">
-          FitGuide — fit is math
+          Ease — fit is math
         </p>
         <h1 className="display mt-6 text-[clamp(3rem,11vw,8rem)]">
           Pants that
@@ -22,7 +22,7 @@ export default function Home() {
       <FitFinder />
 
       <footer className="mono mt-28 flex flex-wrap gap-x-3 border-t border-line pt-6 text-xs text-faint">
-        <span>FitGuide</span>
+        <span>Ease</span>
         <span>·</span>
         <span>brand-agnostic fit</span>
         <span>·</span>

@@ -1,4 +1,6 @@
-# FitGuide
+# Ease
+
+*(working repo name `fitguide`; product brand is **Ease**)*
 
 **Find pants that actually fit.** Brand-agnostic, measurement-first, built for athletic builds (broad chest/shoulders, trim waist, big thighs) — the body that standard sizing serves worst.
 

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FitGuide — pants that actually fit",
+  title: "Ease — pants that actually fit",
   description:
-    "Measure once. FitGuide compares your build to real garment specs across brands and ranks the pants that actually fit — with an honest verdict, not a size label. Built for athletic legs.",
+    "Measure once. Ease compares your build to real garment specs across brands and ranks the pants that actually fit — with an honest verdict, not a size label. Built for athletic legs.",
 };
 
 export default function RootLayout({
