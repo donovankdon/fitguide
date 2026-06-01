@@ -7,7 +7,7 @@ Seeded 2026-05-31 from the founder-survival audit. The autonomous builder (`~/cl
 
 ## [agent] — autonomous, in priority order
 
-- [ ] **A1 · Fatal credibility bug.** If thigh is missing/zero, NEVER renormalize to a perfect score. Return a distinct "rough cut — add your thigh for a real verdict" state with capped confidence; require thigh (with a measurement helper) before showing point-precise ease. (S)
+- [x] **A1 · Fatal credibility bug.** If thigh is missing/zero, NEVER renormalize to a perfect score. Return a distinct "rough cut — add your thigh for a real verdict" state with capped confidence; require thigh (with a measurement helper) before showing point-precise ease. (S)
 - [ ] **A2 · "Nothing here truly fits" verdict.** If the best garment's thigh is still meaningfully tight, say so out loud and point to athletic-native brands (Barbell / State & Liberty / Oxcloth). Add 1-2 slim cuts to the catalog so the tool can demonstrably tell someone to SKIP. (S)
 - [ ] **A3 · Recommend sizing UP.** When a larger waist clears the thigh, recommend it with the explicit waist-gap + "tailor the waist in" note. Drop/zero the constant-inseam weight and reallocate toward thigh. (M)
 - [ ] **A4 · Killer feature: reference-garment as the lead.** Accept a free-text owned pair ("Levi's 541 W34") against a SEPARATE measured reference table (decoupled from the 10-item recommendation catalog). Make it the first-screen interaction: "Name one pair that fits you perfectly." (M)
