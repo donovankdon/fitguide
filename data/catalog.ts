@@ -77,6 +77,20 @@ const LABELS = [30, 32, 33, 34, 36, 38, 40];
 
 const SEED: ModelSeed[] = [
   {
+    id: "levis-510",
+    brand: "Levi's",
+    model: "510 Skinny",
+    category: "jeans",
+    fitType: "skinny",
+    fabric: "99% cotton / 1% elastane",
+    stretchPct: 1,
+    price: 69.5,
+    athleticFitNotes: "Narrowest mainstream cut — blocks any real quad development. Explicit Skip for athletic thighs.",
+    baseLabel: 32,
+    labels: LABELS,
+    base: { waist: 33, hip: 37.5, thigh: 19.5, frontRise: 9.0, inseam: 32, legOpening: 12.5 },
+  },
+  {
     id: "levis-511",
     brand: "Levi's",
     model: "511 Slim",

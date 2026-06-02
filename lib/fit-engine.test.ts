@@ -93,6 +93,49 @@ describe("rough cut — missing or zero thigh", () => {
   });
 });
 
+describe("510 Skinny — explicit Skip for athletic builds", () => {
+  it("scores below 60 for an athletic thigh — Skip verdict", () => {
+    const r = scoreGarment(ATHLETIC, getGarment("levis-510")!);
+    expect(r.score).toBeLessThan(60);
+    expect(r.verdict).toBe("Skip — won't fit right");
+  });
+
+  it("appears in ranked results above the 55 cutoff, ranked last", () => {
+    const ranked = rankFits(ATHLETIC, CATALOG);
+    const skinny = ranked.find((r) => r.garment.id === "levis-510")!;
+    expect(skinny).toBeDefined();
+    expect(skinny.score).toBeGreaterThanOrEqual(55);
+    expect(skinny.score).toBeLessThan(60);
+    // must be the worst-ranked result
+    expect(ranked[ranked.length - 1].garment.id).toBe("levis-510");
+  });
+
+  it("identifies thigh as the problem dimension", () => {
+    const r = scoreGarment(ATHLETIC, getGarment("levis-510")!);
+    const worst = [...r.bestSize.dims].sort((a, b) => a.score - b.score)[0];
+    expect(worst.dim).toBe("thigh");
+    expect(worst.ease).toBeLessThan(worst.idealEase);
+  });
+});
+
+describe("tight-thigh detection — nothing truly fits", () => {
+  // Extreme athletic build: big thighs relative to waist.
+  // Even Barbell (the best item) shows tight thighs for this body.
+  const BIG_THIGHS: BodyProfile = { waist: 32, thigh: 27, hip: 43, inseam: 32 };
+
+  it("top result has thigh dim score below 70 for a very athletic build", () => {
+    const ranked = rankFits(BIG_THIGHS, CATALOG);
+    expect(ranked.length).toBeGreaterThan(0);
+    const topThigh = ranked[0].bestSize.dims.find((d) => d.dim === "thigh")!;
+    expect(topThigh.score).toBeLessThan(70);
+  });
+
+  it("top result still ranks Barbell first for that build", () => {
+    const ranked = rankFits(BIG_THIGHS, CATALOG);
+    expect(ranked[0].garment.id).toBe("barbell-straight-athletic");
+  });
+});
+
 describe("formatEase", () => {
   it("formats room, tightness, and exact", () => {
     expect(formatEase(1)).toBe('+1.0″');

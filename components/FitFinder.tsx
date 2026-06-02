@@ -50,6 +50,15 @@ export function FitFinder() {
 
   const thighMissing = !body.thigh || body.thigh <= 0;
 
+  // Show "nothing truly fits" warning when even the top result has meaningfully tight thighs.
+  // Threshold: thigh dim score < 70 on the #1 result (≈ less than ~0.6" of room vs ideal).
+  const topThighDim = results[0]?.bestSize.dims.find((d) => d.dim === "thigh");
+  const tightThighWarning =
+    !thighMissing &&
+    results.length > 0 &&
+    topThighDim !== undefined &&
+    topThighDim.score < 70;
+
   return (
     <section className="mt-20">
       {/* 01 — measurements */}
@@ -185,6 +194,25 @@ export function FitFinder() {
               <ResultRow key={r.garment.id} rank={i + 1} result={r} />
             ))}
           </ol>
+        )}
+
+        {tightThighWarning && (
+          <div className="rise mt-6 flex items-start gap-3 rounded-lg border border-bad/30 bg-bad/5 px-5 py-4">
+            <span className="mt-px text-bad" aria-hidden>↑</span>
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-bad">
+                Even your top pick is tight through the thigh.
+              </p>
+              <p className="mt-1 text-sm text-muted">
+                For a build like yours, mainstream cuts won't clear the bar. These brands are
+                built specifically for athletic legs — we haven't measured their thigh numbers
+                yet, but they're worth trying:
+              </p>
+              <p className="mono mt-2 text-sm text-fg">
+                State &amp; Liberty · Oxcloth · Barbell Apparel
+              </p>
+            </div>
+          </div>
         )}
       </div>
     </section>
