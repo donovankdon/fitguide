@@ -2,6 +2,14 @@
 
 Autonomous builder appends here each run. Newest at top.
 
+## 2026-06-02 (Don session) — Pleated trousers + cool jeans in the fit finder; shoppable outfits
+- Don's feedback: the fit finder "only shows athletic fits" and the outfit pleated pants "aren't live." Root causes: (1) catalog was 100% athletic/slim jeans — zero pleated/trousers; (2) the 8 signature looks were text-only (not shoppable) + one dead Levi's 559 link.
+- Added **14 graded seeds** to `data/catalog.ts` via a 4-agent research workflow: 6 pleated/wide trousers (Uniqlo Pleated Wide + U Wide-Fit, A&F Pleated Baggy, Buck Mason Hollywood, Todd Snyder Wythe, J.Crew Giant) + 8 relaxed/wide/baggy jeans (Levi's 568 Loose / 578 Baggy, Uniqlo Wide regular+Tall, A&F Athletic Baggy, Carhartt WIP Newel, Stan Ray Painter, AGOLDE Baggy). Real waist/inseam specs, estimated thigh/hip/rise/leg-opening, durable live buyUrls. Trouser inseams set to the Tall/long make a 6'1" frame buys (so they score for the version he'd actually wear). NOT athletic chinos (Don rejected those) and NOT slim.
+- `FitFinder`: default feel → **relaxed** (surfaces pleated/wide/baggy; slim 510/511 drop below the bar), added a **category filter** (All / Trousers / Jeans / Pants), shows top 8. Added `trousers` to the Category type.
+- Outfits: fixed the dead Levi's 559 link (SKU 005590247→005590590); the 8 signature looks are now **shoppable** — `SIGNATURE_BOTTOM_URLS` gives a live buy link per look's bottom, rendered as "shop the trouser →".
+- Updated 2 fit-engine test assertions obsoleted by the richer catalog (wide cuts now fit big-thigh builds, so the old "Barbell ranks #1 / nothing fits" expectations no longer hold; reframed around "slim cuts sink" + "widest cut still tight at thigh 29"). 32 tests pass, build clean, deployed.
+- Caveat for the builder cron: A&F Athletic Straight is on clearance (SKU may vanish); Todd Snyder / Levi's / Huckberry 403 automated fetch (real, just bot-blocked).
+
 ## 2026-06-02 (Don session) — Tops fit finder + git fix
 - Fixed git: `origin` was an SSH remote with no key in the cron env → the overnight builder's `git push` silently failed for two nights (A1 + A2 sat unpushed). Switched `origin` to HTTPS, wired `gh` as the global credential helper (absolute path, works headless), pushed all stuck commits, deployed prod — A1 + A2 now LIVE. Hardened builder step 6 to `vercel deploy --prod --yes` (bare `vercel --prod` printed help instead of deploying).
 - Shipped the TOPS side (`/tops`), parallel to the pants finder, from Don's measured upper body (chest 41 / shoulder 19.5 / sleeve 24.5 / neck 18; 6'1" 225):
