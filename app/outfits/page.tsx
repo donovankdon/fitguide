@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { OutfitView } from "@/components/OutfitView";
-import { STYLE_PROFILE, SIGNATURE_OUTFITS } from "@/data/style-profile";
+import { STYLE_PROFILE, SIGNATURE_OUTFITS, SIGNATURE_BOTTOM_URLS } from "@/data/style-profile";
 import { PALETTE } from "@/data/wardrobe";
 import { COLOR_HEX, readableLabel } from "@/lib/wardrobe";
 
@@ -79,6 +79,16 @@ export default function Outfits() {
                   {o.layerOrCap ? <Row label="layer" value={o.layerOrCap} /> : null}
                 </dl>
                 <p className="mt-3 text-sm leading-relaxed text-muted">{o.why}</p>
+                {SIGNATURE_BOTTOM_URLS[i] && (
+                  <a
+                    href={SIGNATURE_BOTTOM_URLS[i]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mono mt-3 inline-block text-xs text-faint underline-offset-4 hover:text-fg hover:underline"
+                  >
+                    shop the trouser →
+                  </a>
+                )}
               </div>
             </li>
           ))}

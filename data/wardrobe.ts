@@ -555,7 +555,7 @@ const RAW = ([
     "trend": "timeless heritage (relaxed-straight is the safe edge of the 2026 roomy…",
     "fitNote": "Roomy thigh + straight leg is the natural fit for a quad-heavy 38. Less tapered than 541 — go this route if the 541 ever feels tight below the knee.",
     "price": 70,
-    "buyUrl": "https://www.levi.com/US/en_US/clothing/men/jeans/relaxed/559-relaxed-straight-fit-mens-jeans/p/005590247"
+    "buyUrl": "https://www.levi.com/US/en_US/clothing/men/jeans/559TM-relaxed-straight-mens-jeans/p/005590590"
   },
   {
     "id": "levi-s-541-athletic-taper",

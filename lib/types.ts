@@ -1,6 +1,6 @@
 // FitGuide core types. Everything is brand-agnostic and measurement-first.
 
-export type Category = "jeans" | "chinos" | "pants" | "joggers" | "shorts";
+export type Category = "jeans" | "chinos" | "trousers" | "pants" | "joggers" | "shorts";
 export type FitFeel = "slim" | "regular" | "relaxed";
 export type Dimension = "waist" | "thigh" | "hip" | "inseam";
 

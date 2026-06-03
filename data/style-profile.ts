@@ -80,3 +80,16 @@ export const SIGNATURE_OUTFITS: SignatureOutfit[] = [
     "why": "The investment fit: a 10oz made-in-USA boxy tee that stands off the body and reads expensive, paired with a dry-soft vintage-military olive chino and a full-grain white sneaker."
   }
 ];
+
+/** Live buy link for the BOTTOM (the pleated/wide trouser or jean) of each signature look,
+ *  same order as SIGNATURE_OUTFITS — so the looks are shoppable, not just text. Verified 2026-06-02. */
+export const SIGNATURE_BOTTOM_URLS: string[] = [
+  "https://www.uniqlo.com/us/en/products/E462429-000/00", // Uniqlo Pleated Wide Tall (olive)
+  "https://www.buckmason.com/products/classic-khaki-hollywood-pleated-trouser", // Buck Mason Hollywood Pleated
+  "https://huckberry.com/store/flint-and-tinder/category/p/58172-365-pant-straight", // Flint & Tinder 365 (olive swatch)
+  "https://www.jcrew.com/p/mens/categories/clothing/pants-and-chinos/chino/giant-fit-chino-pant/BI521", // J.Crew Giant-fit
+  "https://www.levi.com/US/en_US/clothing/men/jeans/559TM-relaxed-straight-mens-jeans/p/005590590", // Levi's 559 Relaxed
+  "https://www.uniqlo.com/us/en/products/E473319-000/00", // Uniqlo Wide Straight Tall (indigo)
+  "https://www.abercrombie.com/shop/us/p/pleated-baggy-trouser-62973819", // A&F Pleated Baggy (black)
+  "https://www.toddsnyder.com/collections/wythe-trousers", // Todd Snyder relaxed pleated trouser
+];

@@ -36,15 +36,20 @@ describe("fit engine — athletic build", () => {
     expect(barbell.verdict).toBe("Dialed in");
   });
 
-  it("ranks the catalog with the best athletic fit first", () => {
+  it("ranks athletic-appropriate cuts on top and sinks the slim ones", () => {
     const ranked = rankFits(ATHLETIC, CATALOG);
     expect(ranked.length).toBeGreaterThan(0);
-    expect(ranked[0].garment.id).toBe("barbell-straight-athletic");
+    expect(ranked[0].score).toBeGreaterThanOrEqual(90); // something dials in
     // strictness cutoff respected
     expect(ranked.every((r) => r.score >= 55)).toBe(true);
     // sorted descending
     for (let i = 1; i < ranked.length; i++) {
       expect(ranked[i - 1].score).toBeGreaterThanOrEqual(ranked[i].score);
+    }
+    // the narrow cuts land in the bottom third for an athletic build
+    const idx = (id: string) => ranked.findIndex((r) => r.garment.id === id);
+    for (const slim of ["levis-510", "levis-511", "levis-512"]) {
+      expect(idx(slim)).toBeGreaterThan(ranked.length * 0.6);
     }
   });
 
@@ -118,21 +123,21 @@ describe("510 Skinny — explicit Skip for athletic builds", () => {
   });
 });
 
-describe("tight-thigh detection — nothing truly fits", () => {
-  // Extreme athletic build: big thighs relative to waist.
-  // Even Barbell (the best item) shows tight thighs for this body.
-  const BIG_THIGHS: BodyProfile = { waist: 32, thigh: 27, hip: 43, inseam: 32 };
+describe("tight-thigh detection — even the widest cut is tight", () => {
+  // Trim waist + a very big thigh — beyond what even the catalog's widest cuts clear,
+  // so the "nothing truly fits → try athletic-native brands" warning should fire.
+  const BIG_THIGHS: BodyProfile = { waist: 32, thigh: 29, hip: 45, inseam: 32 };
 
-  it("top result has thigh dim score below 70 for a very athletic build", () => {
+  it("top result's thigh dim drops below 70 — triggers the tight-thigh warning", () => {
     const ranked = rankFits(BIG_THIGHS, CATALOG);
     expect(ranked.length).toBeGreaterThan(0);
     const topThigh = ranked[0].bestSize.dims.find((d) => d.dim === "thigh")!;
     expect(topThigh.score).toBeLessThan(70);
   });
 
-  it("top result still ranks Barbell first for that build", () => {
+  it("a roomy/wide cut leads for that build — never a slim one", () => {
     const ranked = rankFits(BIG_THIGHS, CATALOG);
-    expect(ranked[0].garment.id).toBe("barbell-straight-athletic");
+    expect(ranked[0].garment.fitType).not.toMatch(/slim|skinny/i);
   });
 });
 

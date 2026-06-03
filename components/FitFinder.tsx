@@ -4,10 +4,17 @@ import { useMemo, useState } from "react";
 import { CATALOG } from "@/data/catalog";
 import { rankFits, type FitOptions } from "@/lib/fit-engine";
 import { calibrateFromReference } from "@/lib/calibrate";
-import type { BodyProfile, FitFeel } from "@/lib/types";
+import type { BodyProfile, FitFeel, Category } from "@/lib/types";
 import { ResultRow } from "@/components/ResultRow";
 
 const FEELS: FitFeel[] = ["slim", "regular", "relaxed"];
+
+// Category filter, derived from what's actually in the catalog (so it adapts as it grows).
+const CAT_ORDER: Category[] = ["trousers", "jeans", "chinos", "pants", "joggers", "shorts"];
+const CATS: ("all" | Category)[] = [
+  "all",
+  ...CAT_ORDER.filter((c) => CATALOG.some((g) => g.category === c)),
+];
 
 // Default = Don's MEASURED build (wears 38×32). Waist is pants-wear (his natural waist
 // measures ~40, but pants sit lower at ~38); inseam confirmed 32. Thigh + seat are now his
@@ -24,20 +31,27 @@ const FIELDS: { key: BodyKey; label: string; hint: string }[] = [
 
 export function FitFinder() {
   const [body, setBody] = useState<BodyProfile>(DEFAULT_BODY);
-  const [feel, setFeel] = useState<FitFeel>("regular");
+  // Default to relaxed: it's the pleated / wide / baggy lane, and it correctly sinks the slim cuts.
+  const [feel, setFeel] = useState<FitFeel>("relaxed");
+  const [cat, setCat] = useState<"all" | Category>("all");
   const [refOn, setRefOn] = useState(false);
   const [refId, setRefId] = useState("levis-541");
   const [refSize, setRefSize] = useState("W34");
 
   const refGarment = CATALOG.find((g) => g.id === refId) ?? CATALOG[0];
 
+  const pool = useMemo(
+    () => (cat === "all" ? CATALOG : CATALOG.filter((g) => g.category === cat)),
+    [cat],
+  );
+
   const results = useMemo(() => {
     const opts: FitOptions = { feel };
     if (refOn) {
       opts.idealEaseOverride = calibrateFromReference(body, refGarment, refSize);
     }
-    return rankFits(body, CATALOG, opts).slice(0, 5);
-  }, [body, feel, refOn, refGarment, refSize]);
+    return rankFits(body, pool, opts).slice(0, 8);
+  }, [body, feel, pool, refOn, refGarment, refSize]);
 
   function setField(key: BodyKey, v: string) {
     const n = parseFloat(v);
@@ -181,9 +195,27 @@ export function FitFinder() {
         <h2 className="mono text-xs uppercase tracking-[0.25em] text-faint">
           03 — your best-fitting pants{" "}
           <span className="text-faint/70">
-            · {results.length} of {CATALOG.length} clear the bar
+            · {results.length} of {pool.length} clear the bar
           </span>
         </h2>
+
+        {/* category filter — jump straight to trousers (pleated/wide) or jeans */}
+        <div className="mt-4 flex flex-wrap gap-5">
+          {CATS.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setCat(c)}
+              className={`mono text-xs uppercase tracking-[0.2em] transition-colors ${
+                cat === c
+                  ? "text-fg underline underline-offset-8"
+                  : "text-faint hover:text-muted"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
         {results.length === 0 ? (
           <p className="mt-6 text-muted">
             Nothing clears the bar for that build yet. Loosen the fit feel or
