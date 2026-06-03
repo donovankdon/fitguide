@@ -1,7 +1,9 @@
 import Link from "next/link";
 
-export function Nav({ current }: { current: "fit" | "outfits" }) {
-  const cls = (key: "fit" | "outfits") =>
+type NavKey = "fit" | "tops" | "outfits";
+
+export function Nav({ current }: { current: NavKey }) {
+  const cls = (key: NavKey) =>
     `mono text-xs uppercase tracking-[0.2em] transition-colors ${
       current === key
         ? "text-fg underline underline-offset-8"
@@ -14,7 +16,10 @@ export function Nav({ current }: { current: "fit" | "outfits" }) {
       </Link>
       <span className="text-faint">/</span>
       <Link href="/" className={cls("fit")}>
-        Find pants
+        Pants
+      </Link>
+      <Link href="/tops" className={cls("tops")}>
+        Tops
       </Link>
       <Link href="/outfits" className={cls("outfits")}>
         Outfits
