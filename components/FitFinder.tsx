@@ -9,9 +9,10 @@ import { ResultRow } from "@/components/ResultRow";
 
 const FEELS: FitFeel[] = ["slim", "regular", "relaxed"];
 
-// Default = Don's size (wears 38×32). Waist/inseam are real; thigh + seat are
-// estimated for a 38-waist athletic build until measured.
-const DEFAULT_BODY: BodyProfile = { waist: 38, thigh: 27, hip: 44.5, inseam: 32 };
+// Default = Don's MEASURED build (wears 38×32). Waist is pants-wear (his natural waist
+// measures ~40, but pants sit lower at ~38); inseam confirmed 32. Thigh + seat are now his
+// real measured numbers (thigh 26.5, seat 47), not estimates.
+const DEFAULT_BODY: BodyProfile = { waist: 38, thigh: 26.5, hip: 47, inseam: 32 };
 
 type BodyKey = keyof BodyProfile;
 const FIELDS: { key: BodyKey; label: string; hint: string }[] = [
